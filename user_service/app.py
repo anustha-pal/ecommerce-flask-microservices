@@ -22,4 +22,4 @@ def create_user():
     return jsonify(user), 201
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    app.run(debug=True, host="0.0.0.0", port=5003)
