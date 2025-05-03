@@ -1,21 +1,22 @@
-from flask import Flask, jsonify, request
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
-products = [
-    {"id": 1, "name": "T-Shirt", "price": 19.99},
-    {"id": 2, "name": "Sneakers", "price": 89.99},
-]
 
-@app.route("/products", methods=["GET"])
-def get_products():
-    return jsonify(products)
+@app.route('/products')
+def product_page():
+    products = [
+        {"name": "Laptop", "price": 999},
+        {"name": "Headphones", "price": 199}
+    ]
+    return render_template("products.html", products=products)
 
-@app.route("/products/<int:id>", methods=["GET"])
-def get_product(id):
-    product = next((p for p in products if p["id"] == id), None)
-    if product:
-        return jsonify(product)
-    return jsonify({"error": "Product not found"}), 404
+@app.route('/products/api')
+def product_api():
+    return jsonify([
+        {"name": "Laptop", "price": 999},
+        {"name": "Headphones", "price": 199}
+    ])
 
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5001)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001)
+
